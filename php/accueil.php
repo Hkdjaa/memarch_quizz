@@ -2,10 +2,12 @@
 session_start(); 
 include 'Connexion.php';
 
-if(isset($_SESSION['id_utilisateur'])) {
-    $id_utilisateur_connecte = $_SESSION['id_utilisateur']; 
+if(isset($_GET['id_utilisateur'])) {
+    $id_utilisateur_connecte = $_GET['id_utilisateur']; 
+
 } else {
     header("Location: pageconnect.php");
+    exit();
 }
 
 $queryAdmins = "SELECT COUNT(*) AS numAdmins FROM joueur WHERE role = 'admin'";
@@ -130,5 +132,42 @@ $numCategories = $stmtCategories->fetchColumn();
                 <div class="v8_6"></div>
             </div>
             <div class="v1_6399">
-                <div class="v1_6400">
-           
+            <div class="v1_6400">
+                    <div class="name"></div>
+
+                    <div class="v1_6409">
+                        <div class="v1_6410"></div>
+                        <div class="v1_6411"></div>
+                        <div class="v1_6412"></div>
+                        <div class="v1_6413"></div>
+                        <div class="v1_6414"></div>
+                        <div class="v1_6415"></div>
+                    </div>
+                    <div class="name"></div>
+                    <div class="v1_6419">
+                        <div class="v1_6420"></div>
+                        <div class="v1_6421"></div>
+                        <div class="v1_6422"></div>
+                        <div class="v1_6423"></div>
+                    </div>
+                    <div class="name"></div>
+                    <div class="v1_6427">
+                        <div class="v1_6428"></div>
+                        <div class="v1_6429"></div>
+                        <div class="v1_6430"></div>
+                        <div class="v1_6431"></div>
+                        <div class="v1_6432"></div>
+                        <div class="v1_6433"></div>
+                        <div class="v1_6434"></div>
+                        <div class="v1_6435"></div>
+                        <div class="v1_6436"></div>
+                    </div>
+                </div>
+                <div class="v1_6437">
+                    <div class="v1_6438"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
