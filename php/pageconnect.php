@@ -1,5 +1,5 @@
 <?php
-include('Connexion.php');
+require_once('Connexion.php');
 
 if(isset($_POST['submit'])) {
     $id = $_POST['id'];
@@ -11,11 +11,13 @@ if(isset($_POST['submit'])) {
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($password == $row['password']) {
-
-            header("Location: accueil.php");
+            session_start();
+            $_SESSION['role'] = $row['role']; 
+            $_SESSION['id_utilisateur'] = $row['id'];
+            header("Location: accueil.php?id_utilisateur=" . $row['id']);
+            exit();
             exit();
         } else {
             echo "<script>alert('Mot de passe incorrect.');</script>";
@@ -23,17 +25,18 @@ if(isset($_POST['submit'])) {
     } else {
         echo "<script>alert('Identifiant inexistant. Veuillez vous inscrire.');</script>";
     }
-    if ($rowCount > 0) {
+    if ($stmt->rowCount() > 0) {
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
       $role = $row['role'];
         $_SESSION['role'] = $role;
 
-      header("Location: accueil.php");
+        header("Location: accueil.php?id_utilisateur=" . $row['id']);
+        exit();
       exit();
 }
-
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,10 +53,10 @@ if(isset($_POST['submit'])) {
             <div class="v8_1"></div>
             <span class="v1_4981">Salut :) </span>
             <span class="v1_4982">Connectez-vous pour jouer</span>
-            <form method="post" action="">
+            <form method="post" action="" id="loginForm" onsubmit="return valider()">
                 <input name="id" class="v1_4983" placeholder="Identifiant">
                 <div class="v100"></div>
-                <input name="password" class="v1_4985" placeholder="Mot de passe">
+                <input type="password" name="password" class="v1_4985" placeholder="Mot de passe">
                 <div class="v101"></div>
                 <div class="v1_4987">
                     <div class="v1_4988"></div>
@@ -69,5 +72,24 @@ if(isset($_POST['submit'])) {
             </div>
         </div>
     </div>
+
+    <script>
+        function valider() {
+            var id = document.getElementsByName("id")[0].value;
+            var password = document.getElementsByName("password")[0].value;
+            
+            if (id.trim() == "") {
+                alert("Veuillez entrer un identifiant.");
+                return false;
+            }
+
+            if (password.trim() == "") {
+                alert("Veuillez entrer un mot de passe.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>
