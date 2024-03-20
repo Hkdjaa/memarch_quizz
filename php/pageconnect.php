@@ -15,7 +15,7 @@ if(isset($_POST['submit'])) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($password == $row['password']) {
 
-            header("Location: accueil.html");
+            header("Location: accueil.php");
             exit();
         } else {
             echo "<script>alert('Mot de passe incorrect.');</script>";
@@ -64,7 +64,7 @@ if(isset($_POST['submit'])) {
                     <button type="submit" name="submit" class="v1_4992">Continuer</button>
                 </div>
             </form>
-            <a href="creation.html" class="v1_4994">Vous n’avez pas de compte ? Créez-en un !!</a>
+            <a href="creation.php" class="v1_4994">Vous n’avez pas de compte ? Créez-en un !!</a>
             <div class="v1_4995">
             </div>
         </div>
