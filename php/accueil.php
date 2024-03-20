@@ -1,7 +1,12 @@
 <?php
-require_once('Connexion.php');
+session_start(); 
+include 'Connexion.php';
 
-session_start();
+if(isset($_SESSION['id_utilisateur'])) {
+    $id_utilisateur_connecte = $_SESSION['id_utilisateur']; 
+} else {
+    header("Location: pageconnect.php");
+}
 
 $queryAdmins = "SELECT COUNT(*) AS numAdmins FROM joueur WHERE role = 'admin'";
 $stmtAdmins = $connect->prepare($queryAdmins);
@@ -23,21 +28,6 @@ $stmtCategories = $connect->prepare($queryCategories);
 $stmtCategories->execute();
 $numCategories = $stmtCategories->fetchColumn();
 
-$id_utilisateur = $_SESSION['id_utilisateur'] ?? null;
-
-if ($id_utilisateur) {
-    $queryUsername = "SELECT username FROM joueur WHERE id = :id_utilisateur";
-    $stmtUsername = $connect->prepare($queryUsername);
-    $stmtUsername->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
-    $stmtUsername->execute();
-    $userData = $stmtUsername->fetch(PDO::FETCH_ASSOC);
-
-    if ($userData) {
-        $username = $userData['username'];
-    }
-}
-
-$connect = null;
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +69,7 @@ $connect = null;
                 </div>
             </div>
             <a href="profil.php">
-            <button class="v1_6047"><?php if(isset($username)) echo $username; ?></button></a>
+            <div class="v1_6047"><?php echo $id_utilisateur_connecte; ?></div></a>
             <div class="v1_6048">
                 <a href="jeux.php">
                 <button class="v1_6049"></button></a>
