@@ -59,6 +59,7 @@ function getRoleUtilisateur($id_joueur, $connect) {
 $role_utilisateur = getRoleUtilisateur($id_joueur, $connect);
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
