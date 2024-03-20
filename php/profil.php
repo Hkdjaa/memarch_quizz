@@ -57,6 +57,7 @@ function getRoleUtilisateur($id_joueur, $connect) {
 }
 
 $role_utilisateur = getRoleUtilisateur($id_joueur, $connect);
+$id_utilisateur = $_GET['id'];
 
 ?>
 
@@ -65,7 +66,7 @@ $role_utilisateur = getRoleUtilisateur($id_joueur, $connect);
 <head>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
-    <link href="../css/profil.css" rel="stylesheet" />
+    <link href="css/profil.css" rel="stylesheet" />
     <title>Profil</title>
 </head>
 <body>
