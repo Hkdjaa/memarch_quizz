@@ -1,5 +1,25 @@
 <?php
+session_start(); 
 include 'Connexion.php';
+
+if(isset($_SESSION['id_utilisateur'])) {
+    $id_utilisateur_connecte = $_SESSION['id_utilisateur']; 
+} else {
+    header("Location: pageconnect.php");
+}
+
+$role_utilisateur = getRoleUtilisateur($id_utilisateur_connecte, $connect);
+
+function getBioUtilisateur($id_utilisateur, $connect) {
+    $query = "SELECT bio FROM joueur WHERE id = :id_utilisateur";
+    $statement = $connect->prepare($query);
+    $statement->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result['bio'] ?? 'Bonjour';
+}
+
+$bio_utilisateur = getBioUtilisateur($id_utilisateur_connecte, $connect);
 
 $id_joueur = 1;
 $categories_quizz = array(
@@ -77,8 +97,8 @@ $role_utilisateur = getRoleUtilisateur($id_joueur, $connect);
                     </div>
                 </div>
             </div>
-            <span class="v27_74">Fanianglabelle</span>
-            <span class="v27_75">Coucou C’est Ndeye Faniang Et je suis la best !</span>
+            <span class="v27_74"><?php echo $id_utilisateur_connecte; ?></span>
+            <span class="v27_75"><?php echo $bio_utilisateur; ?></span>
             <span class="v27_76">BIO</span>
             <div class="v27_77">
                 <div class="v27_78"></div>
