@@ -11,9 +11,11 @@ if(isset($_POST['submit'])) {
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($password == $row['password']) {
-            header("Location: accueil.php");
+
+            header("Location: accueil.html");
             exit();
         } else {
             echo "<script>alert('Mot de passe incorrect.');</script>";
@@ -21,10 +23,17 @@ if(isset($_POST['submit'])) {
     } else {
         echo "<script>alert('Identifiant inexistant. Veuillez vous inscrire.');</script>";
     }
+    if ($rowCount > 0) {
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      $role = $row['role'];
+        $_SESSION['role'] = $role;
+
+      header("Location: accueil.php");
+      exit();
 }
 
+}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +41,7 @@ if(isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
-    <link href="css/pageconnect.css" rel="stylesheet" />
+    <link href="../css/pageconnect.css" rel="stylesheet" />
     <title>Page de connexion</title>
 </head>
 <body>
@@ -41,7 +50,7 @@ if(isset($_POST['submit'])) {
             <div class="v8_1"></div>
             <span class="v1_4981">Salut :) </span>
             <span class="v1_4982">Connectez-vous pour jouer</span>
-            <form method="post" action="" id="loginForm" onsubmit="return valider()">
+            <form method="post" action="">
                 <input name="id" class="v1_4983" placeholder="Identifiant">
                 <div class="v100"></div>
                 <input name="password" class="v1_4985" placeholder="Mot de passe">
@@ -55,29 +64,10 @@ if(isset($_POST['submit'])) {
                     <button type="submit" name="submit" class="v1_4992">Continuer</button>
                 </div>
             </form>
-            <a href="creation.php" class="v1_4994">Vous n’avez pas de compte ? Créez-en un !!</a>
+            <a href="creation.html" class="v1_4994">Vous n’avez pas de compte ? Créez-en un !!</a>
             <div class="v1_4995">
             </div>
         </div>
     </div>
-
-    <script>
-        function valider() {
-            var id = document.getElementsByName("id")[0].value;
-            var password = document.getElementsByName("password")[0].value;
-            
-            if (id.trim() == "") {
-                alert("Veuillez entrer un identifiant.");
-                return false;
-            }
-
-            if (password.trim() == "") {
-                alert("Veuillez entrer un mot de passe.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 </body>
 </html>
