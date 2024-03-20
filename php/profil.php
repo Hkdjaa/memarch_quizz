@@ -9,7 +9,8 @@ $categories_quizz = array(
     4 => "Quizz applications",
     5 => "Quizz religieux"
 );
-function getScoreQuizz($id_joueur, $categories_quizz, $connect) {
+
+function getScoreQuizz($id_joueur, $id_categorie, $connect) {
     $query = "SELECT COUNT(*) AS score 
     FROM reponse_utilisateur 
     INNER JOIN question ON reponse_utilisateur.id_question = question.id_question 
@@ -91,7 +92,7 @@ $role_utilisateur = getRoleUtilisateur($id_joueur, $connect);
         <div class="v135_5"></div>
         <span class="v135_7">Meilleur score</span>
         <span class="v135_13">Quizz applications</span>
-        <span class="v135_52"><?php echo getScoreQuizz($id_joueur, 5, $connect); ?>/6</span>
+        <span class="v135_52"><?php echo getScoreQuizz($id_joueur, 4, $connect); ?>/6</span>
         <span class="v27_86">Quizz animés</span>
         <span class="v27_87">Meilleur score</span>
         <span class="v27_88"><?php echo getScoreQuizz($id_joueur, 1, $connect); ?>/6</span>
@@ -100,10 +101,10 @@ $role_utilisateur = getRoleUtilisateur($id_joueur, $connect);
         <span class="v135_50">Quizz foot</span>
         <div class="v135_48"></div>
         <span class="v135_51">Meilleur score</span>
-        <span class="v27_102">Quizz religion</span>
+        <span class="v27_102">Quizz religieux</span>
         <span class="v27_103">Meilleur score</span>
-        <span class="v27_104"><?php echo getScoreQuizz($id_joueur, 3, $connect); ?>/6</span>
-        <span class="v135_8"><?php echo getScoreQuizz($id_joueur, 4, $connect); ?>/6</span>
+        <span class="v27_104"><?php echo getScoreQuizz($id_joueur, 5, $connect); ?>/6</span>
+        <span class="v135_8"><?php echo getScoreQuizz($id_joueur, 3, $connect); ?>/6</span>
         <div class="v27_89"></div>
         <div class="v27_93"></div>
         <span class="v27_94">Quizz séries sen</span>
@@ -111,4 +112,4 @@ $role_utilisateur = getRoleUtilisateur($id_joueur, $connect);
         <span class="v27_96"><?php echo getScoreQuizz($id_joueur, 2, $connect); ?>/6</span>
     </div>
 </body> 
-</html> 
+</html>
