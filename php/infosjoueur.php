@@ -6,7 +6,7 @@ if(isset($_SESSION['id_utilisateur'])) {
 
     require_once('Connexion.php');
 
-    $query = "SELECT prenom, nom, identifiant, numero, bio FROM joueur WHERE id = :id";
+    $query = "SELECT prenom, nom, id, numero, bio FROM joueur WHERE id = :id";
     $stmt = $connect->prepare($query);
     $stmt->bindParam(':id', $id_utilisateur);
     $stmt->execute();
@@ -14,7 +14,7 @@ if(isset($_SESSION['id_utilisateur'])) {
 
     $placeholderPrenom = isset($userData['prenom']) ? $userData['prenom'] : "";
     $placeholderNom = isset($userData['nom']) ? $userData['nom'] : "";
-    $placeholderIdentifiant = isset($userData['identifiant']) ? $userData['identifiant'] : "";
+    $placeholderIdentifiant = isset($userData['id']) ? $userData['id'] : "";
     $placeholderNumero = isset($userData['numero']) ? $userData['numero'] : "";
     $placeholderBio = isset($userData['bio']) ? $userData['bio'] : "";
 } else {
@@ -36,7 +36,7 @@ if(isset($_SESSION['id_utilisateur'])) {
         <div class="v1_1340">
             <span class="v1_1341">Modifier le compte</span>
             <div class="v1_1342">
-                <a href="infobio.php">
+                <a href="profil.php">
                 <button class="v1_1343">Retour</button></a>
             </div>
             <div class="v1_1361">
@@ -61,9 +61,10 @@ if(isset($_SESSION['id_utilisateur'])) {
                 <div class="name"></div>
             </div>
             <div class="v1_1377">
-                <div class="v1_1378"></div>
-                <button class="v1_1379" onclick="modifier()">Mettre à jour</button>
-            </div>
+    <div class="v1_1378"></div>
+    <button class="v1_1379" onclick="modifier(<?php echo $id_utilisateur; ?>)">Mettre à jour</button>
+</div>
+
         </div>
         <span class="v26_62">Modifiez les données que vous 
             souhaitez puis cliquez sur “Mettre à jour” pour 
@@ -71,22 +72,24 @@ if(isset($_SESSION['id_utilisateur'])) {
     </div>
 
     <script>
-        function modifier() {
-            var prenom = document.getElementById('prenom').value;
-            var nom = document.getElementById('nom').value;
-            var identifiant = document.getElementById('identifiant').value;
-            var numero = document.getElementById('numero').value;
-            var bio = document.getElementById('bio').value;
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'modification.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                    console.log(xhr.responseText);
-                }
-            };
-            xhr.send('prenom=' + prenom + '&nom=' + nom + '&identifiant=' + identifiant + '&numero=' + numero + '&bio=' + bio);
+function modifier(idUtilisateur) {
+    var prenom = document.getElementById('prenom').value;
+    var nom = document.getElementById('nom').value;
+    var identifiant = document.getElementById('identifiant').value;
+    var numero = document.getElementById('numero').value;
+    var bio = document.getElementById('bio').value;
+    var url = 'modification.php?id=' + idUtilisateur;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            console.log(xhr.responseText);
         }
+    };
+    xhr.send('prenom=' + prenom + '&nom=' + nom + '&identifiant=' + identifiant + '&numero=' + numero + '&bio=' + bio);
+}
+
     </script>
 </body>
 </html>
